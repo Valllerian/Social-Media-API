@@ -5,7 +5,7 @@ module.exports = {
   getThoughts(req, res) {
     Thought.find()
     // Populating the reactions array to see the content;
-      .populate({ path: "reactions"})
+      .populate({ path: "reactions", select: "-__v" })
       .select("-__v")
       .then((thought) => res.json(thought))
       .catch((err) => res.status(500).json(err));
@@ -14,7 +14,7 @@ module.exports = {
   getSingleThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
       // Populating the reactions array to see the content;
-      .populate({ path: "reactions"})
+      .populate({ path: "reactions", select: "-__v" })
       .select("-__v")
       .then((thought) =>
         !thought
@@ -59,7 +59,7 @@ module.exports = {
       { runValidators: true, new: true }
     )
     // Populating the reactions array to see the content;
-      .populate({ path: "reactions"})
+      .populate({ path: "reactions", select: "-__v" })
       .select("-__v")
       .then((thought) =>
         !thought
