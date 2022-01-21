@@ -28,6 +28,12 @@ const thoughtSchema = new Schema(
   }
 );
 
+// Virtual that retrieves the length of the reactions array to this thought;
+
+thoughtSchema.virtual("reactionCount").get(function() {
+  return this.reactions.length;
+});
+
 const Thought = model('thought', thoughtSchema);
 
 module.exports = Thought;

@@ -1,25 +1,28 @@
 const { Schema, model } = require('mongoose');
-const assignmentSchema = require('./Assignment');
+const reactionSchema = require('./Reaction');
 
-// Schema to create Student model
-const studentSchema = new Schema(
+const validate = function(email){
+  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regex.test(email)
+}
+
+// Schema to create User model
+const userSchema = new Schema(
   {
-    first: {
+    username: {
       type: String,
       required: true,
-      max_length: 50,
+      unique: true,
+      trim: true,
     },
-    last: {
+    email: {
       type: String,
       required: true,
-      max_length: 50,
+      unique: true,
+      validate: [validate, 'A valid email is required'],
     },
-    github: {
-      type: String,
-      required: true,
-      max_length: 50,
-    },
-    assignments: [assignmentSchema],
+    thoughts: [{ type: Schema.Types.ObjectId, ref: 'Thought'}], 
+    friends:  [{ type: Schema.Types.ObjectId, ref: 'User'}], 
   },
   {
     toJSON: {
@@ -28,6 +31,13 @@ const studentSchema = new Schema(
   }
 );
 
-const Student = model('student', studentSchema);
+// Virtual that retrieves the length of the friends array to this User;
 
-module.exports = Student;
+
+userSchema.virtual("friendCount").get(function() {
+  return this.friends.length;
+});
+
+const User = model('user', userSchema);
+
+module.exports = User;
