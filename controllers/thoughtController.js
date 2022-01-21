@@ -46,12 +46,44 @@ module.exports = {
       .then(() => res.json({ message: 'Selected thought is deleted' }))
       .catch((err) => res.status(500).json(err));
   },
-  // Update a course
+  // Update a thought:
   updateThought(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $set: req.body },
       { runValidators: true, new: true }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: 'No thought with this ID found' })
+          : res.json(thought)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+  // Add reaction to the thought;
+  addReaction(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $push: { reactions: req.body } },
+      { runValidators: true, new: true }
+    )
+    // Populating out reactions array;
+      .populate({ path: "reactions", select: "-__v" })
+      .select("-__v")
+      .then((thought) =>
+        !thought
+          ? res
+              .status(404)
+              .json({ message: 'No thought with this ID found' })
+          : res.json(thought)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+  // Delete a specific reaction:
+  deleteReaction(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $pull: { reactions: { reactionId: req.params.reactionId } } }
     )
       .then((thought) =>
         !thought
