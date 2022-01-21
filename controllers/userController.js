@@ -1,48 +1,30 @@
-const { Student, Course } = require('../models');
-
-// Aggregate function to get the number of students overall
-const headCount = async () =>
-  Student.aggregate()
-    .count('studentCount')
-    .then((numberOfStudents) => numberOfStudents);
-
-// Aggregate function for getting the overall grade using $avg
-const grade = async (studentId) =>
-  Student.aggregate([
-    {
-      $unwind: '$assignments',
-    },
-    {
-      $group: { _id: studentId, overallGrade: { $avg: '$assignments.score' } },
-    },
-  ]);
+const { User, Thought } = require('../models');
 
 module.exports = {
-  // Get all students
-  getStudents(req, res) {
-    Student.find()
-      .then(async (students) => {
-        const studentObj = {
-          students,
-          headCount: await headCount(),
+  // Get all users:
+  getUsers(req, res) {
+    User.find()
+      .then(async (users) => {
+        const userObj = {
+          users,
+          // headCount: await headCount(),
         };
-        return res.json(studentObj);
+        return res.json(userObj);
       })
       .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
       });
   },
-  // Get a single student
-  getSingleStudent(req, res) {
-    Student.findOne({ _id: req.params.studentId })
+  // Get a single user
+  getUser(req, res) {
+    User.findOne({ _id: req.params.userId })
       .select('-__v')
-      .then(async (student) =>
-        !student
-          ? res.status(404).json({ message: 'No student with that ID' })
+      .then(async (user) =>
+        !user
+          ? res.status(404).json({ message: 'No user with that ID found' })
           : res.json({
-              student,
-              grade: await grade(req.params.studentId),
+            user,
             })
       )
       .catch((err) => {
