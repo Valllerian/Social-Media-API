@@ -11,10 +11,6 @@ const {
 router.route('/').get(getThoughts).post(createThought);
 
 // Route for /api/thoughts/:thoughtId to get a specific thought, update or delete one;
-router
-  .route('/:thoughtId')
-  .get(getSingleThought)
-  .put(updateThought)
-  .delete(deleteThought);
+router.route('/:thoughtId').get(getSingleThought).put(updateThought).delete(deleteThought);
 
 module.exports = router;
