@@ -4,6 +4,9 @@ module.exports = {
   // Get all users:
   getUsers(req, res) {
     User.find()
+    // have to populate arrays to see the content:
+    .populate('thoughts')
+    .populate('friends')
       .then(async (users) => {
         const userObj = {
           users,
@@ -19,6 +22,8 @@ module.exports = {
   // Get a single user
   getUser(req, res) {
     User.findOne({ _id: req.params.userId })
+    .populate({path: 'thoughts'})
+    .populate({path: 'friends'})
       .select('-__v')
       .then(async (user) =>
         !user

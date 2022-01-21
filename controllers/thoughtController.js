@@ -4,13 +4,18 @@ module.exports = {
   // Get all thoughts:
   getThoughts(req, res) {
     Thought.find()
+    // Populating the reactions array to see the content;
+      .populate({ path: "reactions"})
+      .select("-__v")
       .then((thought) => res.json(thought))
       .catch((err) => res.status(500).json(err));
   },
   // Get a thought:
   getSingleThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
-      .select('-__v')
+      // Populating the reactions array to see the content;
+      .populate({ path: "reactions"})
+      .select("-__v")
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: 'No thought with that ID found' })
@@ -53,6 +58,9 @@ module.exports = {
       { $set: req.body },
       { runValidators: true, new: true }
     )
+    // Populating the reactions array to see the content;
+      .populate({ path: "reactions"})
+      .select("-__v")
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: 'No thought with this ID found' })
