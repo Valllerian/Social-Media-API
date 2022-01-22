@@ -49,6 +49,7 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({ message: 'No user with that ID found' })
+          // Deleting thoughts associated with the user:
           : Thought.findOneAndUpdate(
               { users: req.params.userId },
               { $pull: { users: req.params.userId } },
@@ -101,7 +102,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // Remove friend from a user friendlist
+  // Remove friend from a user friendlist:
   removeFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
