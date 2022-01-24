@@ -75,7 +75,7 @@ module.exports = {
       { $push: { reactions: req.body } },
       { runValidators: true, new: true }
     )
-    // Populating out reactions array;
+    // Populating our reactions array;
       .populate({ path: "reactions", select: "-__v" })
       .select("-__v")
       .then((thought) =>
