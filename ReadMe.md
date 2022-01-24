@@ -42,7 +42,6 @@ An API for a social network web application where users can share their thoughts
 
 <h3>Application`s usage video-walkthrough:</h3>
 
-https://youtu.be/NX_2Kk0WMzc
 
 ## License
     
