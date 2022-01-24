@@ -1,5 +1,6 @@
 const { Schema, Types } = require('mongoose');
 
+// Trying to format date and time;
 // var dateFormat = require('dateformat');
 
 const reactionSchema = new Schema(
@@ -21,7 +22,6 @@ const reactionSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      // get:(timePosted) => 
     },
   },
   {
