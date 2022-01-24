@@ -14,7 +14,6 @@ An API for a social network web application where users can share their thoughts
 - [Contributing](#contributing)
 - [Tests](#tests)
 - [Questions](#questions)
-- [Links](#links)
 - [Resources](#resources)
     
 ## Installation
@@ -80,10 +79,6 @@ N/A
 
 - Follow my code: https://github.com/valllerian;
 
-
-## Links
-
-Deployed Heroku Site: https://stark-waters-28388.herokuapp.com/
 
 ## Resources
 
