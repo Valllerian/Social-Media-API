@@ -28,20 +28,21 @@ An API for a social network web application where users can share their thoughts
 - Run the app by entering:  `npm run start` ;
 
 
+Main Routes in insomnia:
 
 <br>
 <img alt="Main routes" src="assets/images/image01.jpg" />
 <br>
 
+User models and file structure: 
 
 <br>
 <img alt="Main Models" src="assets/images/image02.jpg" />
 <br>
 
 
-
 <h3>Application`s usage video-walkthrough:</h3>
-
+<a href="https://youtu.be/qWv2e4_oXVY" target="_blank">Watch on YouTube</a>
 
 ## License
     
